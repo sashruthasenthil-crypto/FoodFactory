@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+
+        <h2>Production Management</h2>
+
+        <a href="{{ url_for('add_production') }}"
+           class="btn btn-success">
+            + Start Production
+        </a>
+
+    </div>
+
+    <div class="table-responsive">
+
+        <table class="table table-bordered table-striped">
+
+            <thead class="table-dark">
+                <tr>
+                    <th>Production ID</th>
+                    <th>Product Name</th>
+                    <th>Quantity Produced</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for batch in batches %}
+
+                <tr>
+                    <td>{{ batch.id }}</td>
+                    <td>{{ batch.product.name }}</td>
+                    <td>{{ batch.quantity }}</td>
+                    <td>{{ batch.created_at }}</td>
+                </tr>
+
+                {% else %}
+
+                <tr>
+                    <td colspan="4" class="text-center">
+                        No production records found.
+                    </td>
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

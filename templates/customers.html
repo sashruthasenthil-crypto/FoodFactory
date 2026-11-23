@@ -1,0 +1,93 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2>Customer Management</h2>
+        <p class="text-muted">Manage your customer information</p>
+    </div>
+
+    <a href="/add_customer" class="btn btn-success">
+        + Add Customer
+    </a>
+</div>
+
+<div class="dashboard-card">
+
+    <form method="GET" action="/customers" class="mb-4">
+        <div class="input-group">
+            <input type="text" name="search"
+                   class="form-control"
+                   placeholder="Search customer by name or phone"
+                   value="{{ search }}">
+
+            <button class="btn btn-success" type="submit">
+                Search
+            </button>
+
+            <a href="/customers" class="btn btn-secondary">
+                Clear
+            </a>
+        </div>
+    </form>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+
+            <thead class="table-success">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Address</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for customer in customers %}
+                <tr>
+                    <td>{{ customer.id }}</td>
+                    <td>{{ customer.name }}</td>
+                    <td>{{ customer.email or '-' }}</td>
+                    <td>{{ customer.phone or '-' }}</td>
+                    <td>{{ customer.address or '-' }}</td>
+
+                    <td>
+                        <a href="/edit_customer/{{ customer.id }}"
+                           class="btn btn-sm btn-primary">
+                            Edit
+                        </a>
+
+                        <form method="POST"
+                              action="/delete_customer/{{ customer.id }}"
+                              style="display:inline"
+                              onsubmit="return confirm('Delete this customer?');">
+
+                            <button type="submit"
+                                    class="btn btn-sm btn-danger">
+                                Delete
+                            </button>
+
+                        </form>
+                    </td>
+                </tr>
+
+                {% else %}
+                <tr>
+                    <td colspan="6" class="text-center">
+                        No customers found.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+
+</div>
+
+{% endblock %}

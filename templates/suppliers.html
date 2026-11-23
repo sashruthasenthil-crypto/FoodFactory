@@ -1,0 +1,89 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2>Supplier Management</h2>
+        <p class="text-muted">Manage your raw material suppliers</p>
+    </div>
+
+    <a href="/add_supplier" class="btn btn-success">
+        + Add Supplier
+    </a>
+</div>
+
+<div class="dashboard-card">
+
+    <form method="GET" action="/suppliers" class="mb-4">
+        <div class="input-group">
+            <input type="text" name="search"
+                   class="form-control"
+                   placeholder="Search supplier by name or phone"
+                   value="{{ search }}">
+
+            <button class="btn btn-success">Search</button>
+
+            <a href="/suppliers" class="btn btn-secondary">
+                Clear
+            </a>
+        </div>
+    </form>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+
+            <thead class="table-success">
+                <tr>
+                    <th>ID</th>
+                    <th>Supplier Name</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for supplier in suppliers %}
+                <tr>
+                    <td>{{ supplier.id }}</td>
+                    <td>{{ supplier.name }}</td>
+                    <td>{{ supplier.phone or '-' }}</td>
+                    <td>{{ supplier.email or '-' }}</td>
+                    <td>{{ supplier.address or '-' }}</td>
+
+                    <td>
+                        <a href="/edit_supplier/{{ supplier.id }}"
+                           class="btn btn-sm btn-primary">
+                            Edit
+                        </a>
+
+                        <form method="POST"
+                              action="/delete_supplier/{{ supplier.id }}"
+                              style="display:inline"
+                              onsubmit="return confirm('Delete this supplier?');">
+
+                            <button type="submit"
+                                    class="btn btn-sm btn-danger">
+                                Delete
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+
+                {% else %}
+                <tr>
+                    <td colspan="6" class="text-center">
+                        No suppliers found.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
+{% endblock %}

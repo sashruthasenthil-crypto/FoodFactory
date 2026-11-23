@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">Inventory Management</h2>
+
+    <h4>Available Stock</h4>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Material</th>
+                    <th>Category</th>
+                    <th>Available Quantity</th>
+                    <th>Minimum Stock</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for material in materials %}
+                <tr>
+                    <td>{{ material.id }}</td>
+                    <td>{{ material.name }}</td>
+                    <td>{{ material.category or '-' }}</td>
+
+                    <td>
+                        {{ material.quantity }} {{ material.unit }}
+                    </td>
+
+                    <td>
+                        {{ material.minimum_stock }} {{ material.unit }}
+                    </td>
+
+                    <td>
+                        {% if material.quantity <= material.minimum_stock %}
+                            <span class="badge bg-danger">Low Stock</span>
+                        {% else %}
+                            <span class="badge bg-success">Available</span>
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        <a href="{{ url_for('stock_transaction', id=material.id) }}"
+                           class="btn btn-primary btn-sm">
+                            Update Stock
+                        </a>
+                    </td>
+                </tr>
+
+                {% else %}
+                <tr>
+                    <td colspan="7" class="text-center">
+                        No materials available.
+                    </td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+    </div>
+
+    <hr class="my-4">
+
+    <h4>Recent Stock Transactions</h4>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+
+            <thead class="table-dark">
+                <tr>
+                    <th>Transaction ID</th>
+                    <th>Material</th>
+                    <th>Type</th>
+                    <th>Quantity</th>
+                    <th>Note</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for transaction in transactions %}
+                <tr>
+                    <td>{{ transaction.id }}</td>
+
+                    <td>{{ transaction.raw_material.name }}</td>
+
+                    <td>
+                        {% if transaction.transaction_type == 'Stock In' %}
+                            <span class="badge bg-success">Stock In</span>
+                        {% else %}
+                            <span class="badge bg-danger">Stock Out</span>
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        {{ transaction.quantity }}
+                        {{ transaction.raw_material.unit }}
+                    </td>
+
+                    <td>{{ transaction.note or '-' }}</td>
+
+                    <td>{{ transaction.created_at }}</td>
+                </tr>
+
+                {% else %}
+                <tr>
+                    <td colspan="6" class="text-center">
+                        No transactions recorded.
+                    </td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+    </div>
+
+</div>
+
+{% endblock %}

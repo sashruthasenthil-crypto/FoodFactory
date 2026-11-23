@@ -1,0 +1,49 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Dashboard</h2>
+<p class="text-muted">Welcome to FoodFactory Management System</p>
+
+<div class="row g-4 mt-3">
+
+    <div class="col-md-3">
+        <div class="dashboard-card">
+            <h5>Total Customers</h5>
+            <h2>0</h2>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="dashboard-card">
+            <h5>Total Products</h5>
+            <h2>0</h2>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="dashboard-card">
+            <h5>Raw Materials</h5>
+            <h2>0</h2>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="dashboard-card">
+            <h5>Total Suppliers</h5>
+            <h2>0</h2>
+        </div>
+    </div>
+
+</div>
+
+<div class="dashboard-card mt-4">
+    <h4>Welcome to FoodFactory!</h4>
+    <p>
+        Manage your customers, products, suppliers,
+        inventory and manufacturing activities in one place.
+    </p>
+</div>
+
+{% endblock %}

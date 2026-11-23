@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2 class="mb-3">Update Stock</h2>
+
+    <div class="card p-3 mb-3">
+
+        <h5>Material: {{ material.name }}</h5>
+
+        <p>
+            Current Stock:
+            <strong>
+                {{ material.quantity }} {{ material.unit }}
+            </strong>
+        </p>
+
+    </div>
+
+    <form method="POST">
+
+        <div class="mb-3">
+
+            <label class="form-label">Transaction Type</label>
+
+            <select name="transaction_type"
+                    class="form-control"
+                    required>
+
+                <option value="">Select Transaction</option>
+                <option value="Stock In">Stock In</option>
+                <option value="Stock Out">Stock Out</option>
+
+            </select>
+
+        </div>
+
+        <div class="mb-3">
+
+            <label class="form-label">Quantity</label>
+
+            <input type="number"
+                   name="quantity"
+                   class="form-control"
+                   min="0.01"
+                   step="any"
+                   required>
+
+        </div>
+
+        <div class="mb-3">
+
+            <label class="form-label">Note</label>
+
+            <textarea name="note"
+                      class="form-control"
+                      placeholder="Example: Purchased from supplier"></textarea>
+
+        </div>
+
+        <button type="submit" class="btn btn-success">
+            Save Transaction
+        </button>
+
+        <a href="{{ url_for('inventory') }}"
+           class="btn btn-secondary">
+            Cancel
+        </a>
+
+    </form>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2 class="mb-3">Start Production</h2>
+
+    <form method="POST">
+
+        <div class="mb-3">
+
+            <label class="form-label">Select Product</label>
+
+            <select name="product_id"
+                    class="form-control"
+                    required>
+
+                <option value="">Select Product</option>
+
+                {% for product in products %}
+
+                <option value="{{ product.id }}">
+                    {{ product.name }}
+                </option>
+
+                {% endfor %}
+
+            </select>
+
+        </div>
+
+        <div class="mb-3">
+
+            <label class="form-label">Production Quantity (Batches)</label>
+
+            <input type="number"
+                   name="quantity"
+                   class="form-control"
+                   min="0.01"
+                   step="any"
+                   required>
+
+        </div>
+
+        <button type="submit" class="btn btn-success">
+            Complete Production
+        </button>
+
+        <a href="{{ url_for('production') }}"
+           class="btn btn-secondary">
+            Cancel
+        </a>
+
+    </form>
+
+</div>
+
+{% endblock %}

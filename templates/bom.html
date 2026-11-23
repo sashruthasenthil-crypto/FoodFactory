@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Bill of Materials</h2>
+
+        <a href="{{ url_for('add_bom') }}" class="btn btn-success">
+            + Add BOM Item
+        </a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Product</th>
+                    <th>Raw Material</th>
+                    <th>Quantity Required</th>
+                    <th>Unit</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for item in bom_items %}
+                <tr>
+                    <td>{{ item.id }}</td>
+
+                    <td>{{ item.product.name }}</td>
+
+                    <td>{{ item.raw_material.name }}</td>
+
+                    <td>{{ item.quantity_required }}</td>
+
+                    <td>{{ item.raw_material.unit }}</td>
+
+                    <td>
+                        <a href="{{ url_for('edit_bom', id=item.id) }}"
+                           class="btn btn-primary btn-sm">
+                            Edit
+                        </a>
+
+                        <form method="POST"
+                              action="{{ url_for('delete_bom', id=item.id) }}"
+                              style="display:inline;"
+                              onsubmit="return confirm('Delete this BOM item?');">
+
+                            <button type="submit" class="btn btn-danger btn-sm">
+                                Delete
+                            </button>
+
+                        </form>
+                    </td>
+                </tr>
+
+                {% else %}
+                <tr>
+                    <td colspan="6" class="text-center">
+                        No BOM items found.
+                    </td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+    </div>
+
+</div>
+
+{% endblock %}
